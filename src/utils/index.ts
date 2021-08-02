@@ -22,7 +22,7 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = <T>(value: T, delay?: number): T => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     // after value is changed, the timer is working
@@ -53,3 +53,18 @@ log();
 log();
 log();
 */
+
+export const useArray = <T>(initialArray: T[]) => {
+  const [value, setValue] = useState(initialArray);
+  return {
+    value,
+    setValue,
+    add: (item: T) => setValue([...value, item]),
+    clear: () => setValue([]),
+    removeIndex: (index: number) => {
+      const copyValue = [...value];
+      copyValue.splice(index, 1);
+      setValue(copyValue);
+    },
+  };
+};
