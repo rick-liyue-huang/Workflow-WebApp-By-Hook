@@ -6,8 +6,8 @@ import { LoginScreen } from "./screens/login";
 function App() {
   return (
     <div className="App">
-      <ProjectListScreen />
-      {/*<LoginScreen />*/}
+      {/*<ProjectListScreen />*/}
+      <LoginScreen />
     </div>
   );
 }
