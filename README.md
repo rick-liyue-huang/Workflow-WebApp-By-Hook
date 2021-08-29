@@ -15,7 +15,10 @@ codes come with professional comments format.
 In the first stage, I will use 'json-server' to mock the backend database server, and the backend URI lookup is
 based on Restful API. Install the json-server by npm install -g json-server and created the backend database file of
 'db.json'. I create the script order of `"json-server": "json-server --watch\__mock_backend_data_file__/database.json --port 3001"` to run the mock database file.
-In the second stage, I will use dev-tool named 'localstorage-console-tool', through which the database will be stored and controlled in webpage localstorage. The specific installation and configuration follows as below: `npm install git+https://github.com/rick-liyue-huang/localstorage-console-tool.git --legacy-peer-deps` and add the 'mockServiceWorker.js' in '/public' directory.
+In the second stage, I will use dev-tool named 'localstorage-console-tool', through which the database will be
+stored and controlled in webpage localstorage. The specific installation and configuration follows as below: `npm install git+https://github.com/rick-liyue-huang/localstorage-console-tool.git --legacy-peer-deps` and add the
+'mockServiceWorker.js' in '/public' directory. The environment variables confirmed in '.env' and '.env.development'
+to be compatible with the 'npm run start' and 'npm run build' respectively.
 
 3.Create the Project List and Login page in the initial stage
 The project list is created in 'screens/projectList' directory, and acted as part of 'authenticated-app.tsx', which means that these page will be shown after login. Through this project, I need create some utilities in 'utils' directory, in which 'cleanObject' used to omit 'key === 0' status, 'useMount' and 'useDebounce' are custom hoods. In the directory of 'screens/login' I create the login page and test whether it is working by custom middleware in 'json_server_mock_file/middleware.js'.
