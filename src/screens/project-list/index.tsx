@@ -33,7 +33,7 @@ export const ProjectListScreen = () => {
   return (
     <div>
       <SearchPanel users={users} setParam={setParam} param={param} />
-      <List list={list} setList={setList} users={users} />
+      <List list={list} users={users} />
     </div>
   );
 };
