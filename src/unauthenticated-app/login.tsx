@@ -27,18 +27,3 @@ export const LoginScreen = () => {
     </form>
   );
 };
-
-/*
-  const login = (param: { username: string; password: string }) => {
-  fetch(`${ApiUrl}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(param),
-  }).then(async (response) => {
-    if (response.ok) {
-    }
-  });
-};
-*/
