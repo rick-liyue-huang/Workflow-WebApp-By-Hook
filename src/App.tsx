@@ -5,7 +5,7 @@ import { ProjectListScreen } from "./screens/project-list";
 import { LoginScreen } from "screens/login/inded";
 import { useAuth } from "./context/auth-context";
 import { AuthenticatedApp } from "authenticated-app";
-import { UnAuthenticatedApp } from "./unauthenticated-app/index";
+import { UnAuthenticatedApp } from "./unauthenticated-app";
 
 function App() {
   const { user } = useAuth();
