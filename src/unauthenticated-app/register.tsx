@@ -1,16 +1,15 @@
 import React, { FormEvent } from "react";
-import { ApiUrl } from "../project-list";
-import { useAuth } from "../../context/auth-context";
+import { useAuth } from "context/auth-context";
 
-export const LoginScreen = () => {
-  const { login, user } = useAuth();
+export const RegisterScreen = () => {
+  const { register, user } = useAuth();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const username = (event.currentTarget.elements[0] as HTMLInputElement)
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({ username, password });
+    register({ username, password });
   };
 
   return (
@@ -24,20 +23,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">password</label>
         <input type="password" id={"password"} />
       </div>
-      <button type={"submit"}>Login</button>
+      <button type={"submit"}>Register</button>
     </form>
   );
 };
-
-/*const login = (value: { username: string; password: string }) => {
-    fetch(`${ApiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(value),
-    }).then(async (response) => {
-      if (response.ok) {
-      }
-    });
-  };*/

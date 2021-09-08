@@ -1,6 +1,5 @@
 import React, { FormEvent } from "react";
-import { ApiUrl } from "../project-list";
-import { useAuth } from "../../context/auth-context";
+import { useAuth } from "context/auth-context";
 
 export const LoginScreen = () => {
   const { login, user } = useAuth();
@@ -28,16 +27,3 @@ export const LoginScreen = () => {
     </form>
   );
 };
-
-/*const login = (value: { username: string; password: string }) => {
-    fetch(`${ApiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(value),
-    }).then(async (response) => {
-      if (response.ok) {
-      }
-    });
-  };*/
