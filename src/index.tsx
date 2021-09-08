@@ -4,15 +4,12 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { loadServer, DevTools } from "localstorage-console-tool";
-import { AppProviders } from "context";
 
 loadServer(() => {
   return ReactDOM.render(
     <React.StrictMode>
-      <AppProviders>
-        <DevTools />
-        <App />
-      </AppProviders>
+      <DevTools />
+      <App />
     </React.StrictMode>,
     document.getElementById("root")
   );

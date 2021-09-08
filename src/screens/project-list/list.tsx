@@ -3,8 +3,8 @@ import { User } from "./search-panel";
 
 export interface Project {
   id: string;
-  name: string;
   personId: string;
+  name: string;
   pin: boolean;
   organization: string;
 }
@@ -14,7 +14,7 @@ interface ListProps {
   users: User[];
 }
 
-export const List: React.FC<ListProps> = ({ list, users }) => {
+export const List: React.FC<ListProps> = ({ users, list }) => {
   return (
     <table>
       <thead>

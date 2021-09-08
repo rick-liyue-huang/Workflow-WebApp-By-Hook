@@ -1,50 +1,21 @@
 import React, { useEffect, useState } from "react";
 import qs from "qs";
-import { List } from "./list";
 import { SearchPanel } from "./search-panel";
-import { cleanObject, useMount, useDebounce } from "../../utils";
-import { useHttp } from "../../utils/http";
+import { List } from "./list";
+import { cleanObject, useDebounce } from "../../utils";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
-export const ProjectListScreen = () => {
-  const [param, setParam] = useState({ name: "", personId: "" });
+export const ProjectListScreens = () => {
+  const [param, setParam] = useState({
+    name: "",
+    personId: "",
+  });
   const [users, setUsers] = useState([]);
   const [list, setList] = useState([]);
-  const debouncedParam = useDebounce(param, 1000);
-
-  const client = useHttp();
+  const debouncedParam = useDebounce(param, 2000);
 
   useEffect(() => {
-    client("projects", { data: cleanObject(debouncedParam) }).then(setList);
-  }, [debouncedParam]);
-
-  useMount(() => {
-    client("users").then(setUsers);
-  });
-
-  return (
-    <div>
-      <SearchPanel users={users} setParam={setParam} param={param} />
-      <List list={list} users={users} />
-    </div>
-  );
-};
-
-/*
-  useEffect(() => {
-    fetch(`${ApiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
-  }, []);
-* */
-
-/**
-  useEffect(() => {
-    client('projects', {data: cleanObject(debouncedParam)}).then(setList);
-    
     fetch(
       `${ApiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
     ).then(async (response) => {
@@ -54,15 +25,18 @@ export const ProjectListScreen = () => {
     });
   }, [debouncedParam]);
 
- */
-
-/**
-   useMount(() => {
-    client('users').then(setUsers);
+  useEffect(() => {
     fetch(`${ApiUrl}/users`).then(async (response) => {
       if (response.ok) {
         setUsers(await response.json());
       }
     });
-  });
-   */
+  }, []);
+
+  return (
+    <>
+      <SearchPanel param={param} setParam={setParam} users={users} />
+      <List list={list} users={users} />
+    </>
+  );
+};

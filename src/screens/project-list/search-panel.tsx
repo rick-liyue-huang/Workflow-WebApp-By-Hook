@@ -8,7 +8,6 @@ export interface User {
   organization: string;
   token: string;
 }
-
 interface SearchPanelProps {
   users: User[];
   param: { name: string; personId: string };
@@ -22,28 +21,30 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
 }) => {
   return (
     <form>
-      <input
-        type="text"
-        value={param.name}
-        onChange={(evt) =>
-          setParam({
-            ...param,
-            name: evt.target.value,
-          })
-        }
-      />
+      <div>
+        <input
+          type="text"
+          value={param.name}
+          onChange={(e) =>
+            setParam({
+              ...param,
+              name: e.target.value,
+            })
+          }
+        />
+      </div>
       <select
         value={param.personId}
-        onChange={(evt) =>
+        onChange={(e) =>
           setParam({
             ...param,
-            personId: evt.target.value,
+            personId: e.target.value,
           })
         }
       >
-        <option value={""}>Person In Charge</option>
+        <option value="">Person In Charge</option>
         {users.map((user) => (
-          <option key={user.id} value={user.id}>
+          <option value={user.id} key={user.id}>
             {user.name}
           </option>
         ))}

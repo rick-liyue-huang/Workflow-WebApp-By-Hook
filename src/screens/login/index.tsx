@@ -1,8 +1,19 @@
-import { FormEvent } from "react";
-import { useAuth } from "context/auth-context";
+import React, { FormEvent } from "react";
+import { ApiUrl } from "../project-list";
 
 export const LoginScreen = () => {
-  const { login } = useAuth();
+  const login = (value: { username: string; password: string }) => {
+    fetch(`${ApiUrl}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(value),
+    }).then(async (response) => {
+      if (response.ok) {
+      }
+    });
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,29 +27,14 @@ export const LoginScreen = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="username">Account: </label>
+        <label htmlFor="username">username</label>
         <input type="text" id={"username"} />
       </div>
       <div>
-        <label htmlFor="password">Password: </label>
+        <label htmlFor="password">password</label>
         <input type="password" id={"password"} />
       </div>
       <button type={"submit"}>Login</button>
     </form>
   );
 };
-
-/*
-  const login = (param: { username: string; password: string }) => {
-  fetch(`${ApiUrl}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(param),
-  }).then(async (response) => {
-    if (response.ok) {
-    }
-  });
-};
-*/
