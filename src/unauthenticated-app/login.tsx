@@ -1,8 +1,46 @@
 import React, { FormEvent } from "react";
+import { Button, Form, Input } from "antd";
 import { useAuth } from "context/auth-context";
 
 export const LoginScreen = () => {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
+
+  const handleSubmit = (param: { username: string; password: string }) => {
+    login(param);
+  };
+
+  return (
+    <Form onFinish={handleSubmit}>
+      <Form.Item
+        name={"username"}
+        rules={[{ required: true, message: "need username" }]}
+      >
+        <Input
+          placeholder={"please input username"}
+          type="text"
+          id={"username"}
+        />
+      </Form.Item>
+      <Form.Item
+        name={"password"}
+        rules={[{ required: true, message: "need password" }]}
+      >
+        <Input
+          placeholder={"please input password"}
+          type="text"
+          id={"password"}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type={"primary"} htmlType={"submit"}>
+          Login
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
+/*
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const username = (event.currentTarget.elements[0] as HTMLInputElement)
@@ -11,19 +49,4 @@ export const LoginScreen = () => {
       .value;
     login({ username, password });
   };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {user && user?.token}
-      <div>
-        <label htmlFor="username">username</label>
-        <input type="text" id={"username"} />
-      </div>
-      <div>
-        <label htmlFor="password">password</label>
-        <input type="password" id={"password"} />
-      </div>
-      <button type={"submit"}>Login</button>
-    </form>
-  );
-};
+* */

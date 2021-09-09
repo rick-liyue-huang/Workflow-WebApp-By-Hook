@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { loadServer, DevTools } from "localstorage-console-tool";
+// in order to use custom style
+import "antd/dist/antd.less";
 import { AppProvider } from "./context";
 
 loadServer(() => {
