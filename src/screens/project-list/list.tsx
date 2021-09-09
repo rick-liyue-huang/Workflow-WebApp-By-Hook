@@ -21,6 +21,7 @@ export const List: React.FC<ListProps> = ({ users, list }) => {
   return (
     <Table
       pagination={false}
+      rowKey={"id"}
       columns={[
         {
           title: "Project Name",
