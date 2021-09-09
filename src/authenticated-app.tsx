@@ -2,21 +2,32 @@ import React from "react";
 import { ProjectListScreens } from "./screens/project-list";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
-import { Button } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import { Row } from "./components/lib";
+import { ReactComponent as SoftLogo } from "assets/software-logo.svg";
 
 export const AuthenticatedApp = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <Container>
       <Header>
         <HeaderLeft gap={true} between={true}>
-          <h2>Logo</h2>
+          <SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
           <h2>Project</h2>
           <h2>Account</h2>
         </HeaderLeft>
         <HeaderRight>
-          <Button onClick={logout}>Logout</Button>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={"logout"}>
+                  <a onClick={logout}>Logout</a>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+          </Dropdown>
         </HeaderRight>
       </Header>
       {/*<Nav>nav</Nav>*/}
@@ -46,6 +57,9 @@ const Header = styled.header`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 10;
 `;
 
 const HeaderLeft = styled(Row)``;

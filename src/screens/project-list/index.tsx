@@ -4,6 +4,7 @@ import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { cleanObject, useDebounce, useMount } from "../../utils";
 import { useHttp } from "../../utils/http";
+import styled from "@emotion/styled";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
@@ -26,12 +27,17 @@ export const ProjectListScreens = () => {
   });
 
   return (
-    <>
+    <Container>
+      <h1>Project List</h1>
       <SearchPanel param={param} setParam={setParam} users={users} />
       <List list={list} users={users} />
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
 
 /*
   useEffect(() => {
