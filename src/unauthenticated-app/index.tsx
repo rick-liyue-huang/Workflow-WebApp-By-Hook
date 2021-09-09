@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { Card } from "antd";
+import { Card, Typography } from "antd";
 import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import styled from "@emotion/styled";
 import { Divider, Button } from "antd";
-import logo from "assets/logo.svg";
-import left from "assets/left.svg";
-import right from "assets/right.svg";
+// import logo from "assets/kissflow.svg";
+// import left from "assets/left.svg";
+// import right from "assets/right.svg";
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
+  const { Title } = Typography;
   return (
     <Container>
       <Header />
+      <Title level={3} style={{ color: "#1DA57A" }}>
+        WorkFlow App
+      </Title>
       <Background />
       <NewCard>
-        <Title>{isRegister ? "Please Register" : "Please Login"}</Title>
+        <NewTitle>{isRegister ? "Please Register" : "Please Login"}</NewTitle>
         {isRegister ? <RegisterScreen /> : <LoginScreen />}
         <Divider />
         <Button type={"link"} onClick={() => setIsRegister(!isRegister)}>
@@ -42,8 +46,9 @@ const NewCard = styled(Card)`
   text-align: center;
 `;
 
-const Header = styled.header`
-  background: url(${logo}) no-repeat center;
+const Header = styled.div`
+  background: url("https://kissflow.com/wp-content/themes/kissflow_website/assets/images/homeicons/kflogo_icon.svg")
+    no-repeat center;
   padding: 5rem 0;
   background-size: 8rem;
   width: 100%;
@@ -58,10 +63,11 @@ const Background = styled.div`
   background-position: left bottom, right bottom;
   background-size: calc(((100vw - 40rem) / 2) - 3.2rem),
     calc(((100vw - 40rem) / 2) - 3.2rem), cover;
-  background-image: url(${left}), url(${right});
+  background-image: url("https://kissflow.com/static/kf_images/procurement-software.svg"),
+    url("https://kissflow.com/wp-content/uploads/2021/08/fully-managed-community-platform.png");
 `;
 
-const Title = styled.h2`
+const NewTitle = styled.h2`
   margin-bottom: 2.4rem;
   color: rgb(94, 108, 132);
 `;

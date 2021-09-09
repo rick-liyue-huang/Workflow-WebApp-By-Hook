@@ -4,7 +4,8 @@ import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
 import { Row } from "./components/lib";
-import { ReactComponent as SoftLogo } from "assets/software-logo.svg";
+// import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
+import logo from "assets/kissflow.svg";
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
@@ -12,7 +13,8 @@ export const AuthenticatedApp = () => {
     <Container>
       <Header>
         <HeaderLeft gap={true} between={true}>
-          <SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+          <img src={logo} alt="" />
+          {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
           <h2>Project</h2>
           <h2>Account</h2>
         </HeaderLeft>
