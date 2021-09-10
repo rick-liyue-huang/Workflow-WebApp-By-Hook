@@ -8,6 +8,8 @@ import { Typography } from "antd";
 // import {useAsync} from 'hooks/use-async';
 import { useProjects } from "../../hooks/use-projects";
 import { useUsers } from "../../hooks/use-users";
+import { Helmet } from "react-helmet";
+import { useDocumentTitle } from "../../hooks/use-documentTitle";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
@@ -21,16 +23,15 @@ export const ProjectListScreens = () => {
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState<null | Error>(null);
   const debouncedParam = useDebounce(param, 2000);
+  useDocumentTitle("Project List", false);
   // const clients = useHttp();
   /*const {execute, isLoading, error, data: list} = useAsync<Project[]>();
-
   useEffect(() => {
     execute(clients("projects", { data: cleanObject(debouncedParam) }))
     // eslint-disable-next-line
   }, [debouncedParam]);*/
 
   const { isLoading, error, data: list } = useProjects(debouncedParam);
-
   /*useMount(() => {
     clients("users").then(setUsers);
   });*/
@@ -38,6 +39,9 @@ export const ProjectListScreens = () => {
   const { data: users } = useUsers();
   return (
     <Container>
+      {/*<Helmet>
+        <title>Project List</title>
+      </Helmet>*/}
       <h1>Project List</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (

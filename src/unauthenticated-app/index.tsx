@@ -4,7 +4,7 @@ import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import styled from "@emotion/styled";
 import { Divider, Button } from "antd";
-import { throws } from "assert";
+import { Helmet } from "react-helmet";
 // import logo from "assets/workflow.svg";
 // import left from "assets/left.svg";
 // import right from "assets/right.svg";
@@ -13,8 +13,12 @@ export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const { Title } = Typography;
+
   return (
     <Container>
+      {/*<Helmet>
+        <title>Please Login or Register</title>
+      </Helmet>*/}
       <Header />
       <Title level={3} style={{ color: "#1DA57A" }}>
         WorkFlow App
