@@ -5,6 +5,7 @@ import { LoginScreen } from "./login";
 import styled from "@emotion/styled";
 import { Divider, Button } from "antd";
 import { Helmet } from "react-helmet";
+import { useDocumentTitle } from "../hooks/use-documentTitle";
 // import logo from "assets/workflow.svg";
 // import left from "assets/left.svg";
 // import right from "assets/right.svg";
@@ -13,7 +14,7 @@ export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const { Title } = Typography;
-
+  useDocumentTitle("Please Register or Login");
   return (
     <Container>
       {/*<Helmet>
