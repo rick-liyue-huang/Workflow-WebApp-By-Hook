@@ -4,6 +4,7 @@ import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import styled from "@emotion/styled";
 import { Divider, Button } from "antd";
+import { throws } from "assert";
 // import logo from "assets/workflow.svg";
 // import left from "assets/left.svg";
 // import right from "assets/right.svg";
@@ -19,6 +20,9 @@ export const UnauthenticatedApp = () => {
         WorkFlow App
       </Title>
       <Background />
+      {/*<Button onClick={() => {
+        throw new Error('click exception')
+      }}>exception</Button>*/}
       <NewCard>
         <NewTitle>{isRegister ? "Please Register" : "Please Login"}</NewTitle>
         {error ? (
