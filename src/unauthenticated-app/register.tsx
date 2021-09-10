@@ -2,11 +2,33 @@ import React from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "./index";
+import { useAsync } from "../hooks/use-async";
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { register } = useAuth();
-  const handleSubmit = (param: { username: string; password: string }) => {
-    register(param);
+  const { execute, isLoading } = useAsync(undefined, { throwOnError: true });
+
+  const handleSubmit = async ({
+    cpassword,
+    ...param
+  }: {
+    username: string;
+    password: string;
+    cpassword: string;
+  }) => {
+    if (cpassword !== param.password) {
+      onError(new Error("please match the twice passwords"));
+      return;
+    }
+    try {
+      await execute(register(param));
+    } catch (e: any) {
+      onError(e);
+    }
   };
 
   return (
@@ -31,8 +53,18 @@ export const RegisterScreen = () => {
           id={"password"}
         />
       </Form.Item>
+      <Form.Item
+        name={"confirm-password"}
+        rules={[{ required: true, message: "need confirm password" }]}
+      >
+        <Input
+          placeholder={"please confirm password"}
+          type="text"
+          id={"confirm-password"}
+        />
+      </Form.Item>
       <Form.Item>
-        <LongButton type={"primary"} htmlType={"submit"}>
+        <LongButton loading={isLoading} type={"primary"} htmlType={"submit"}>
           Register
         </LongButton>
       </Form.Item>

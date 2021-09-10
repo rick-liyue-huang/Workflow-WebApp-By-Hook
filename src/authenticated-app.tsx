@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
 import { Row } from "./components/lib";
 // import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
-import logo from "assets/kissflow.svg";
+import logo from "assets/workflow.svg";
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();

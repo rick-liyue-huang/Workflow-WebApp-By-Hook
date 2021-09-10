@@ -4,12 +4,13 @@ import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import styled from "@emotion/styled";
 import { Divider, Button } from "antd";
-// import logo from "assets/kissflow.svg";
+// import logo from "assets/workflow.svg";
 // import left from "assets/left.svg";
 // import right from "assets/right.svg";
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const { Title } = Typography;
   return (
     <Container>
@@ -20,9 +21,22 @@ export const UnauthenticatedApp = () => {
       <Background />
       <NewCard>
         <NewTitle>{isRegister ? "Please Register" : "Please Login"}</NewTitle>
-        {isRegister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? (
+          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+        ) : null}
+        {isRegister ? (
+          <RegisterScreen onError={setError} />
+        ) : (
+          <LoginScreen onError={setError} />
+        )}
         <Divider />
-        <Button type={"link"} onClick={() => setIsRegister(!isRegister)}>
+        <Button
+          type={"link"}
+          onClick={() => {
+            setIsRegister(!isRegister);
+            setError(null);
+          }}
+        >
           {isRegister ? "Have an account? Login" : "New guest? Register"}
         </Button>
       </NewCard>

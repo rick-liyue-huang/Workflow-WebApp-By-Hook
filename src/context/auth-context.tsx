@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from "react";
 import * as auth from "auth-providers";
 import { User } from "../screens/project-list/search-panel";
 import { http } from "../utils/http";
-import { useMount } from "../utils";
+import { useMount } from "hooks/use-mount";
 
 interface AuthForm {
   username: string;

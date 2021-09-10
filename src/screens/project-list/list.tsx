@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import { User } from "./search-panel";
 import dayjs from "dayjs";
 
@@ -12,12 +12,12 @@ export interface Project {
   created: number;
 }
 
-interface ListProps {
-  list: Project[];
+interface ListProps extends TableProps<Project> {
+  // list: Project[];
   users: User[];
 }
 
-export const List: React.FC<ListProps> = ({ users, list }) => {
+export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
   return (
     <Table
       pagination={false}
@@ -57,7 +57,8 @@ export const List: React.FC<ListProps> = ({ users, list }) => {
           },
         },
       ]}
-      dataSource={list}
+      // dataSource={list}
+      {...props}
     />
   );
 };
