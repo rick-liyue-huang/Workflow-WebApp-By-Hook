@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { Form, Input, Select } from "antd";
+import { Project } from "./list";
+import { UserSelect } from "../../components/user-select";
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -12,7 +14,8 @@ export interface User {
 }
 interface SearchPanelProps {
   users: User[];
-  param: { name: string; personId: string };
+  param: Partial<Pick<Project, "name" | "personId">>;
+  // param: { name: string; personId: string };
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 
@@ -37,7 +40,8 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
+          defaultOptionName={"Person In Charge"}
           value={param.personId}
           onChange={(value) =>
             setParam({
@@ -45,14 +49,7 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
               personId: value,
             })
           }
-        >
-          <Select.Option value="">Person In Charge</Select.Option>
-          {users.map((user) => (
-            <Select.Option value={String(user.id)} key={user.id}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+        />
       </Form.Item>
     </Form>
   );
@@ -89,4 +86,23 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
         ))}
       </select>
     </form>
+* */
+
+/*
+   <Select
+          value={param.personId}
+          onChange={(value) =>
+            setParam({
+              ...param,
+              personId: value,
+            })
+          }
+        >
+          <Select.Option value="">Person In Charge</Select.Option>
+          {users.map((user) => (
+            <Select.Option value={String(user.id)} key={user.id}>
+              {user.name}
+            </Select.Option>
+          ))}
+        </Select>
 * */

@@ -10,7 +10,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/one-project";
 import { resetRouter } from "./utils";
-import { User } from "./screens/project-list/search-panel";
+// import { User } from "./screens/project-list/search-panel";
 
 export const AuthenticatedApp = () => {
   return (

@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects, useUsers, useDocumentTitle } from "hooks";
 import { useUrlQueryParam } from "../../hooks/use-url-query-param";
+import { useProjectSearchParams } from "./utils";
 // import { Helmet } from "react-helmet";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
@@ -15,12 +16,17 @@ export const ProjectListScreen = () => {
     name: "",
     personId: "",
   });*/
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+  /*const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+
+  // to match the project type with urlSearchParam
+  const projectParam = {...param, personId: Number(param.personId) || undefined}*/
+  const [param, setParam] = useProjectSearchParams();
 
   // const [users, setUsers] = useState([]);
   // const [list, setList] = useState([]);
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState<null | Error>(null);
+  // const debouncedParam = useDebounce(param, 2000);
   const debouncedParam = useDebounce(param, 2000);
   useDocumentTitle("Project List", false);
   // const clients = useHttp();
