@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input } from "antd";
 import { useAuth } from "context/auth-context";
 import { LongButton } from "./index";
-import { useAsync } from "../hooks/use-async";
+import { useAsync } from "hooks";
 
 export const LoginScreen = ({
   onError,

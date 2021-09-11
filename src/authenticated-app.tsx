@@ -6,43 +6,60 @@ import { Button, Dropdown, Menu } from "antd";
 import { Row } from "./components/lib";
 // import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
 import logo from "assets/workflow.svg";
+import { Navigate, Route, Routes } from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
+import { ProjectScreen } from "screens/project";
 
 export const AuthenticatedApp = () => {
-  const { logout, user } = useAuth();
   return (
     <Container>
-      <Header>
-        <HeaderLeft gap={true} between={true}>
-          <img src={logo} alt="" />
-          {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
-          <h2>Project</h2>
-          <h2>Account</h2>
-        </HeaderLeft>
-        <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={"logout"}>
-                  <Button type={"link"} onClick={logout}>
-                    Logout
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <Button type={"link"} onClick={(e) => e.preventDefault()}>
-              Hi, {user?.name}
-            </Button>
-          </Dropdown>
-        </HeaderRight>
-      </Header>
+      <PageHeader />
       {/*<Nav>nav</Nav>*/}
       <Main>
-        <ProjectListScreens />
+        <Router>
+          <Routes>
+            <Route path={"/projects"} element={<ProjectListScreens />} />
+            <Route
+              path={"/projects/:projectId/*"}
+              element={<ProjectScreen />}
+            />
+          </Routes>
+        </Router>
       </Main>
       {/*<Aside>aside</Aside>*/}
       {/*<Footer>footer</Footer>*/}
     </Container>
+  );
+};
+
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header>
+      <HeaderLeft gap={true} between={true}>
+        <img src={logo} alt="" />
+        {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
+        <h2>Project</h2>
+        <h2>Account</h2>
+      </HeaderLeft>
+      <HeaderRight>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key={"logout"}>
+                <Button type={"link"} onClick={logout}>
+                  Logout
+                </Button>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type={"link"} onClick={(e) => e.preventDefault()}>
+            Hi, {user?.name}
+          </Button>
+        </Dropdown>
+      </HeaderRight>
+    </Header>
   );
 };
 

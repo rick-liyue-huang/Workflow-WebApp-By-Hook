@@ -1,7 +1,7 @@
 import { ApiUrl } from "../screens/project-list";
 import qs from "qs";
 import * as auth from "auth-providers";
-import { useAuth } from "../context/auth-context";
+// import { useAuth } from "../context/auth-context";
 
 interface Config extends RequestInit {
   data?: object;

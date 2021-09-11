@@ -3,11 +3,11 @@ import { useState } from "react";
 interface State<T> {
   error: Error | null;
   data: T | null;
-  stat: "idle" | "loading" | "error" | "success";
+  status: "idle" | "loading" | "error" | "success";
 }
 
 const defaultInitialState: State<null> = {
-  stat: "idle",
+  status: "idle",
   data: null,
   error: null,
 };
@@ -28,13 +28,13 @@ export const useAsync = <T>(
   const setData = (data: T) =>
     setState({
       data,
-      stat: "success",
+      status: "success",
       error: null,
     });
   const setError = (error: Error) =>
     setState({
       error,
-      stat: "error",
+      status: "error",
       data: null,
     });
 
@@ -43,7 +43,7 @@ export const useAsync = <T>(
     if (!promise || !promise.then()) {
       throw new Error("use Promise type");
     }
-    setState({ ...state, stat: "loading" });
+    setState({ ...state, status: "loading" });
     return promise
       .then((data) => {
         setData(data);
@@ -65,10 +65,10 @@ export const useAsync = <T>(
   };
 
   return {
-    isIdle: state.stat === "idle",
-    isLoading: state.stat === "loading",
-    isError: state.stat === "error",
-    isSuccess: state.stat === "success",
+    isIdle: state.status === "idle",
+    isLoading: state.status === "loading",
+    isError: state.status === "error",
+    isSuccess: state.status === "success",
     execute,
     setData,
     setError,

@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "./index";
-import { useAsync } from "../hooks/use-async";
+import { useAsync } from "hooks";
 
 export const RegisterScreen = ({
   onError,
