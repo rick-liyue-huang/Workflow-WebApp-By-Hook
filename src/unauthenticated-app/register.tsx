@@ -54,13 +54,13 @@ export const RegisterScreen = ({
         />
       </Form.Item>
       <Form.Item
-        name={"confirm-password"}
+        name={"cpassword"}
         rules={[{ required: true, message: "need confirm password" }]}
       >
         <Input
           placeholder={"please confirm password"}
           type="text"
-          id={"confirm-password"}
+          id={"cpassword"}
         />
       </Form.Item>
       <Form.Item>

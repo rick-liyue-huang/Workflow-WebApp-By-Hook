@@ -1,33 +1,35 @@
 import React from "react";
-import { ProjectListScreens } from "./screens/project-list";
+import { ProjectListScreen } from "./screens/project-list";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
 import { Row } from "./components/lib";
 // import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
 import logo from "assets/workflow.svg";
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ProjectScreen } from "screens/project";
+import { ProjectScreen } from "screens/one-project";
+import { resetRouter } from "./utils";
+import { User } from "./screens/project-list/search-panel";
 
-export const AuthenticatedApp = () => {
+export const AuthenticatedApp = ({ user }: { user: User | null }) => {
   return (
     <Container>
       <PageHeader />
-      {/*<Nav>nav</Nav>*/}
       <Main>
         <Router>
           <Routes>
-            <Route path={"/projects"} element={<ProjectListScreens />} />
+            {user && <Navigate to={"/projects"} replace={true} />}
+            <Route path={"/projects"} element={<ProjectListScreen />} />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
+
+            {/*<Navigate to={"/projects"} replace={true}/>*/}
           </Routes>
         </Router>
       </Main>
-      {/*<Aside>aside</Aside>*/}
-      {/*<Footer>footer</Footer>*/}
     </Container>
   );
 };
@@ -37,7 +39,9 @@ const PageHeader = () => {
   return (
     <Header>
       <HeaderLeft gap={true} between={true}>
-        <img src={logo} alt="" />
+        <Button type={"link"} onClick={resetRouter}>
+          <img src={logo} alt="" />
+        </Button>
         {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
         <h2>Project</h2>
         <h2>Account</h2>

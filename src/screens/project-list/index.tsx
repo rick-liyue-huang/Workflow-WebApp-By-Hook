@@ -5,15 +5,18 @@ import { useDebounce } from "hooks";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects, useUsers, useDocumentTitle } from "hooks";
+import { useUrlQueryParam } from "../../hooks/use-url-query-param";
 // import { Helmet } from "react-helmet";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
-export const ProjectListScreens = () => {
-  const [param, setParam] = useState({
+export const ProjectListScreen = () => {
+  /* const [, setParam] = useState({
     name: "",
     personId: "",
-  });
+  });*/
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+
   // const [users, setUsers] = useState([]);
   // const [list, setList] = useState([]);
   // const [loading, setLoading] = useState(false);
@@ -33,6 +36,7 @@ export const ProjectListScreens = () => {
   });*/
 
   const { data: users } = useUsers();
+  useUrlQueryParam(["random"]);
   return (
     <Container>
       {/*<Helmet>
@@ -48,6 +52,8 @@ export const ProjectListScreens = () => {
     </Container>
   );
 };
+
+ProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;
