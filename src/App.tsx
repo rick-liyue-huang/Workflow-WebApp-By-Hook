@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div className="App">
       <ErrorBoundary fallbackRender={FullPageError}>
-        {user ? <AuthenticatedApp user={user} /> : <UnauthenticatedApp />}
+        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
       </ErrorBoundary>
     </div>
   );

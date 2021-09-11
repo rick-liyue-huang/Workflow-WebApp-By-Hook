@@ -6,27 +6,25 @@ import { Button, Dropdown, Menu } from "antd";
 import { Row } from "./components/lib";
 // import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
 import logo from "assets/workflow.svg";
-import { Route, Routes, Navigate } from "react-router";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/one-project";
 import { resetRouter } from "./utils";
 import { User } from "./screens/project-list/search-panel";
 
-export const AuthenticatedApp = ({ user }: { user: User | null }) => {
+export const AuthenticatedApp = () => {
   return (
     <Container>
       <PageHeader />
       <Main>
         <Router>
           <Routes>
-            {user && <Navigate to={"/projects"} replace={true} />}
             <Route path={"/projects"} element={<ProjectListScreen />} />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
-
-            {/*<Navigate to={"/projects"} replace={true}/>*/}
+            <Navigate to={"/projects"} replace={true} />
           </Routes>
         </Router>
       </Main>
