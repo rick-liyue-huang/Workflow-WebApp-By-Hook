@@ -19,7 +19,7 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   // list: Project[];
   users: User[];
-  refresh?: () => void;
+  reload?: () => void;
 }
 
 export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
@@ -27,7 +27,7 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
   const { mutate } = useEditProject();
   // 科里化, 因为  id 是 先 发现的，然后是 pin 后来知道的，因此需要先处理前面的后处理后面。这就是科里化
   const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props.refresh);
+    mutate({ id, pin }).then(props.reload);
 
   return (
     <Table
@@ -41,9 +41,7 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
             return (
               <Pin
                 checked={project.pin}
-                onCheckedChange={(pin) => {
-                  mutate({ id: project.id, pin });
-                }}
+                onCheckedChange={pinProject(project.id)}
               />
             );
           },

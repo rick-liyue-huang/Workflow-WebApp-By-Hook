@@ -55,7 +55,7 @@ export const ProjectListScreen = () => {
       ) : null}
       {/*<List list={list} users={users} />*/}
       <List
-        refresh={reload}
+        reload={reload}
         loading={isLoading}
         dataSource={list || []}
         users={users || []}
