@@ -1,22 +1,23 @@
 import { useAsync } from "./use-async";
 import { Project } from "screens/project-list/list";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { cleanObject } from "utils";
 import { useHttp } from "./use-http";
 
 export const useProjects = (param?: Partial<Project>) => {
-  const clients = useHttp();
+  const client = useHttp();
   const { execute, ...result } = useAsync<Project[]>();
 
-  const fetchProject = () =>
-    clients("projects", { data: cleanObject(param || {}) });
+  const fetchProject = useCallback(
+    () => client("projects", { data: cleanObject(param || {}) }),
+    [client, param]
+  );
 
   useEffect(() => {
     execute(fetchProject(), {
       reload: fetchProject,
     });
-    // eslint-disable-next-line
-  }, [param]);
+  }, [param, execute, fetchProject]);
 
   return result;
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from "./use-mounted-ref";
 
 interface State<T> {
@@ -33,56 +33,63 @@ export const useAsync = <T>(
   // remember the previous promise
   // initialState is function: lazy initiate, 因此不能直接传入函数，需要额外保存
   const [reload, setReload] = useState(() => () => {});
-  const setData = (data: T) =>
-    setState({
-      data,
-      status: "success",
-      error: null,
-    });
-  const setError = (error: Error) =>
-    setState({
-      error,
-      status: "error",
-      data: null,
-    });
+  const setData = useCallback(
+    (data: T) =>
+      setState({
+        data,
+        status: "success",
+        error: null,
+      }),
+    []
+  );
+
+  const setError = useCallback(
+    (error: Error) =>
+      setState({
+        error,
+        status: "error",
+        data: null,
+      }),
+    []
+  );
 
   // trigger the async callback
-  const execute = (
-    promise: Promise<T>,
-    executeConfig?: { reload: () => Promise<T> }
-  ) => {
-    if (!promise || !promise.then()) {
-      throw new Error("use Promise type");
-    }
-    // lazy function
-    setReload(() => () => {
-      if (executeConfig?.reload) {
-        execute(executeConfig.reload(), executeConfig);
+  const execute = useCallback(
+    (promise: Promise<T>, executeConfig?: { reload: () => Promise<T> }) => {
+      if (!promise || !promise.then()) {
+        throw new Error("use Promise type");
       }
-    });
-    setState({ ...state, status: "loading" });
-    return promise
-      .then((data) => {
-        // if (mountedRef.current) {
-        //
-        // }
-        setData(data);
-        return data;
-      })
-      .catch((error) => {
-        // catch can capture the error, and the outside cannot get the error
-        setError(error);
-        if (config.throwOnError) {
-          console.log("true..............");
-          return Promise.reject(error);
-        } else {
-          // return error;
-          return Promise.reject(error);
+      // lazy function
+      setReload(() => () => {
+        if (executeConfig?.reload) {
+          execute(executeConfig.reload(), executeConfig);
         }
-        // return  error;
-        //  so we need throw Promise
       });
-  };
+      // using prevState to prevent the loop render
+      setState((prevState) => ({ ...prevState, status: "loading" }));
+      return promise
+        .then((data) => {
+          if (mountedRef.current) {
+            setData(data);
+          }
+          return data;
+        })
+        .catch((error) => {
+          // catch can capture the error, and the outside cannot get the error
+          setError(error);
+          if (config.throwOnError) {
+            console.log("true..............");
+            return Promise.reject(error);
+          } else {
+            // return error;
+            return Promise.reject(error);
+          }
+          // return  error;
+          //  so we need throw Promise
+        });
+    },
+    [config.throwOnError, mountedRef, setData, setError]
+  );
 
   return {
     isIdle: state.status === "idle",
