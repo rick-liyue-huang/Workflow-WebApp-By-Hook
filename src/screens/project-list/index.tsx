@@ -36,7 +36,7 @@ export const ProjectListScreen = () => {
     // eslint-disable-next-line
   }, [debouncedParam]);*/
 
-  const { isLoading, error, data: list } = useProjects(debouncedParam);
+  const { isLoading, error, data: list, reload } = useProjects(debouncedParam);
   /*useMount(() => {
     clients("users").then(setUsers);
   });*/
@@ -54,7 +54,12 @@ export const ProjectListScreen = () => {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       {/*<List list={list} users={users} />*/}
-      <List loading={isLoading} dataSource={list || []} users={users || []} />
+      <List
+        refresh={reload}
+        loading={isLoading}
+        dataSource={list || []}
+        users={users || []}
+      />
     </Container>
   );
 };

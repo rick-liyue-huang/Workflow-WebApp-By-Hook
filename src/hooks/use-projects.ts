@@ -8,8 +8,13 @@ export const useProjects = (param?: Partial<Project>) => {
   const clients = useHttp();
   const { execute, ...result } = useAsync<Project[]>();
 
+  const fetchProject = () =>
+    clients("projects", { data: cleanObject(param || {}) });
+
   useEffect(() => {
-    execute(clients("projects", { data: cleanObject(param || {}) }));
+    execute(fetchProject(), {
+      reload: fetchProject,
+    });
     // eslint-disable-next-line
   }, [param]);
 

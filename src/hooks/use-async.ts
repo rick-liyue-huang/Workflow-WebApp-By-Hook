@@ -20,11 +20,15 @@ export const useAsync = <T>(
   initialState?: State<T>,
   initialConfig?: typeof defaultConfig
 ) => {
-  const config = { ...defaultConfig, initialConfig };
+  const config = { ...defaultConfig, ...initialConfig };
   const [state, setState] = useState<State<T>>({
     ...defaultInitialState,
     ...initialState,
   });
+
+  // remember the previous promise
+  // initialState is function: lazy initiate, 因此不能直接传入函数，需要额外保存
+  const [reload, setReload] = useState(() => () => {});
   const setData = (data: T) =>
     setState({
       data,
@@ -39,10 +43,19 @@ export const useAsync = <T>(
     });
 
   // trigger the async callback
-  const execute = (promise: Promise<T>) => {
+  const execute = (
+    promise: Promise<T>,
+    executeConfig?: { reload: () => Promise<T> }
+  ) => {
     if (!promise || !promise.then()) {
       throw new Error("use Promise type");
     }
+    // lazy function
+    setReload(() => () => {
+      if (executeConfig?.reload) {
+        execute(executeConfig.reload(), executeConfig);
+      }
+    });
     setState({ ...state, status: "loading" });
     return promise
       .then((data) => {
@@ -72,6 +85,8 @@ export const useAsync = <T>(
     execute,
     setData,
     setError,
+    // reload can trigger the execute and refresh the state
+    reload,
     ...state,
   };
 };
