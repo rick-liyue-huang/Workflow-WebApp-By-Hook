@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from "./use-mounted-ref";
 
 interface State<T> {
   error: Error | null;
@@ -25,6 +26,9 @@ export const useAsync = <T>(
     ...defaultInitialState,
     ...initialState,
   });
+
+  // import useMountedRef to deal with mounted component state
+  const mountedRef = useMountedRef();
 
   // remember the previous promise
   // initialState is function: lazy initiate, 因此不能直接传入函数，需要额外保存
@@ -59,6 +63,9 @@ export const useAsync = <T>(
     setState({ ...state, status: "loading" });
     return promise
       .then((data) => {
+        // if (mountedRef.current) {
+        //
+        // }
         setData(data);
         return data;
       })
