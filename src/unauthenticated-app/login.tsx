@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input } from "antd";
-import { useAuth } from "context/auth-context";
+import { useNewAuth } from "context/auth-context-redux";
 import { LongButton } from "./index";
 import { useAsync } from "hooks";
 
@@ -9,7 +9,7 @@ export const LoginScreen = ({
 }: {
   onError: (error: Error) => void;
 }) => {
-  const { login } = useAuth();
+  const { login } = useNewAuth();
   const { execute, isLoading } = useAsync(undefined, { throwOnError: true });
 
   const handleSubmit = async (param: {
