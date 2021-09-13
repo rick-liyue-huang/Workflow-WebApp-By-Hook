@@ -1,25 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { ProjectListScreen } from "./screens/project-list";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
-import { Row } from "./components/lib";
+import { NoPaddingButton, Row } from "./components/lib";
 // import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
 import logo from "assets/workflow.svg";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/one-project";
 import { resetRouter } from "./utils";
+import { ProjectModal } from "./screens/project-list/project-modal";
+import { ProjectPopover } from "./components/project-popover";
 // import { User } from "./screens/project-list/search-panel";
 
 export const AuthenticatedApp = () => {
+  //Lifting State Up to deal with opening one 'editProject' page
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <PageHeader />
+      <PageHeader setProjectModalOpen={setProjectModalOpen} />
+      {/*<Button onClick={() => setProjectModalOpen(true)}>test</Button>*/}
       <Main>
         <Router>
           <Routes>
-            <Route path={"/projects"} element={<ProjectListScreen />} />
+            <Route
+              path={"/projects"}
+              element={
+                <ProjectListScreen setProjectModalOpen={setProjectModalOpen} />
+              }
+            />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
@@ -28,40 +38,52 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
+      <ProjectModal
+        projectModalOpen={projectModalOpen}
+        onClose={() => setProjectModalOpen(false)}
+      />
     </Container>
   );
 };
 
-const PageHeader = () => {
-  const { logout, user } = useAuth();
+const PageHeader = (props: {
+  setProjectModalOpen: (isOpen: boolean) => void;
+}) => {
   return (
     <Header>
       <HeaderLeft gap={true} between={true}>
-        <Button type={"link"} onClick={resetRouter}>
+        <NoPaddingButton type={"link"} onClick={resetRouter}>
           <img src={logo} alt="" />
-        </Button>
+        </NoPaddingButton>
         {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
-        <h2>Project</h2>
-        <h2>Account</h2>
+        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <span>Account</span>
       </HeaderLeft>
       <HeaderRight>
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key={"logout"}>
-                <Button type={"link"} onClick={logout}>
-                  Logout
-                </Button>
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <Button type={"link"} onClick={(e) => e.preventDefault()}>
-            Hi, {user?.name}
-          </Button>
-        </Dropdown>
+        <UserComponent />
       </HeaderRight>
     </Header>
+  );
+};
+
+const UserComponent = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key={"logout"}>
+            <Button type={"link"} onClick={logout}>
+              Logout
+            </Button>
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <Button type={"link"} onClick={(e) => e.preventDefault()}>
+        Hi, {user?.name}
+      </Button>
+    </Dropdown>
   );
 };
 

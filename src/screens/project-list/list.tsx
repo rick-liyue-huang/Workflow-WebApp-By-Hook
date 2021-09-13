@@ -1,10 +1,11 @@
 import React from "react";
-import { Table, TableProps, Rate } from "antd";
+import { Table, TableProps, Rate, Dropdown, Menu } from "antd";
 import { User } from "./search-panel";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject } from "hooks";
+import { NoPaddingButton } from "../../components/lib";
 
 // personId changed to number type
 export interface Project {
@@ -20,6 +21,7 @@ interface ListProps extends TableProps<Project> {
   // list: Project[];
   users: User[];
   reload?: () => void;
+  setProjectModalOpen: (isOpen: boolean) => void;
 }
 
 export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
@@ -79,6 +81,28 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
                   ? dayjs(project.created).format("DD/MM/YYYY")
                   : "none"}
               </span>
+            );
+          },
+        },
+        {
+          render(value, project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key={"edit"}>
+                      <NoPaddingButton
+                        type={"link"}
+                        onClick={() => props.setProjectModalOpen(true)}
+                      >
+                        Edit
+                      </NoPaddingButton>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <NoPaddingButton type={"link"}>...</NoPaddingButton>
+              </Dropdown>
             );
           },
         },

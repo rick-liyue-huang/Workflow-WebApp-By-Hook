@@ -1,5 +1,5 @@
 import React from "react";
-import { Spin, Typography } from "antd";
+import { Spin, Typography, Button } from "antd";
 import styled from "@emotion/styled";
 import { DevTools } from "localstorage-console-tool";
 
@@ -47,3 +47,7 @@ export const FullPageError = ({ error }: { error: Error | null }) => {
     </FullPage>
   );
 };
+
+export const NoPaddingButton = styled(Button)`
+  padding: 0;
+`;

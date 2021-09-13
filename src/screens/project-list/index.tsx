@@ -3,15 +3,18 @@ import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useDebounce } from "hooks";
 import styled from "@emotion/styled";
-import { Typography } from "antd";
+import { Typography, Button } from "antd";
 import { useProjects, useUsers, useDocumentTitle } from "hooks";
 import { useUrlQueryParam } from "../../hooks/use-url-query-param";
 import { useProjectSearchParams } from "./utils";
+import { Row } from "components/lib";
 // import { Helmet } from "react-helmet";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props: {
+  setProjectModalOpen: (isOpen: boolean) => void;
+}) => {
   /* const [, setParam] = useState({
     name: "",
     personId: "",
@@ -48,7 +51,13 @@ export const ProjectListScreen = () => {
       {/*<Helmet>
         <title>Project List</title>
       </Helmet>*/}
-      <h1>Project List</h1>
+      <Row between={true}>
+        <h1>Project List</h1>
+        <Button onClick={() => props.setProjectModalOpen(true)}>
+          Create Project
+        </Button>
+      </Row>
+
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
@@ -59,6 +68,7 @@ export const ProjectListScreen = () => {
         loading={isLoading}
         dataSource={list || []}
         users={users || []}
+        setProjectModalOpen={props.setProjectModalOpen}
       />
     </Container>
   );
