@@ -19,7 +19,17 @@ export const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <PageHeader setProjectModalOpen={setProjectModalOpen} />
+      <PageHeader
+        /*  component composition can use to decompose the set method, */
+        projectButton={
+          <NoPaddingButton
+            type={"link"}
+            onClick={() => setProjectModalOpen(true)}
+          >
+            Create Project
+          </NoPaddingButton>
+        }
+      />
       {/*<Button onClick={() => setProjectModalOpen(true)}>test</Button>*/}
       <Main>
         <Router>
@@ -27,7 +37,17 @@ export const AuthenticatedApp = () => {
             <Route
               path={"/projects"}
               element={
-                <ProjectListScreen setProjectModalOpen={setProjectModalOpen} />
+                <ProjectListScreen
+                  // setProjectModalOpen={setProjectModalOpen}
+                  projectButton={
+                    <NoPaddingButton
+                      type={"link"}
+                      onClick={() => setProjectModalOpen(true)}
+                    >
+                      Create Project
+                    </NoPaddingButton>
+                  }
+                />
               }
             />
             <Route
@@ -47,7 +67,8 @@ export const AuthenticatedApp = () => {
 };
 
 const PageHeader = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) => {
   return (
     <Header>
@@ -56,7 +77,8 @@ const PageHeader = (props: {
           <img src={logo} alt="" />
         </NoPaddingButton>
         {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        {/*<ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />*/}
+        <ProjectPopover {...props} />
         <span>Account</span>
       </HeaderLeft>
       <HeaderRight>

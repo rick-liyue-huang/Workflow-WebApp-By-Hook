@@ -21,7 +21,8 @@ interface ListProps extends TableProps<Project> {
   // list: Project[];
   users: User[];
   reload?: () => void;
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }
 
 export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
@@ -91,12 +92,13 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
                 overlay={
                   <Menu>
                     <Menu.Item key={"edit"}>
-                      <NoPaddingButton
+                      {/*<NoPaddingButton
                         type={"link"}
                         onClick={() => props.setProjectModalOpen(true)}
                       >
                         Edit
-                      </NoPaddingButton>
+                      </NoPaddingButton>*/}
+                      {props.projectButton}
                     </Menu.Item>
                   </Menu>
                 }

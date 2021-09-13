@@ -13,7 +13,8 @@ import { Row } from "components/lib";
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) => {
   /* const [, setParam] = useState({
     name: "",
@@ -53,9 +54,10 @@ export const ProjectListScreen = (props: {
       </Helmet>*/}
       <Row between={true}>
         <h1>Project List</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
+        {/*<Button onClick={() => props.setProjectModalOpen(true)}>
           Create Project
-        </Button>
+        </Button>*/}
+        {props.projectButton}
       </Row>
 
       <SearchPanel param={param} setParam={setParam} users={users || []} />
@@ -68,7 +70,8 @@ export const ProjectListScreen = (props: {
         loading={isLoading}
         dataSource={list || []}
         users={users || []}
-        setProjectModalOpen={props.setProjectModalOpen}
+        // setProjectModalOpen={props.setProjectModalOpen}
+        projectButton={props.projectButton}
       />
     </Container>
   );
