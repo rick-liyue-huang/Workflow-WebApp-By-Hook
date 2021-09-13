@@ -3,11 +3,11 @@ import { Popover, Typography, List, Divider, Button } from "antd";
 import { useProjects } from "../hooks";
 import styled from "@emotion/styled";
 import { NoPaddingButton } from "./lib";
+import { useDispatch } from "react-redux";
+import { projectListAction } from "screens/project-list/project-list.slice";
 
-export const ProjectPopover = (props: {
-  // setProjectModalOpen: (isOpen: boolean) => void;
-  projectButton: JSX.Element;
-}) => {
+export const ProjectPopover = () => {
+  const dispatch = useDispatch();
   const { data: projects, isLoading } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin);
   const content = (
@@ -21,13 +21,12 @@ export const ProjectPopover = (props: {
         ))}
       </List>
       <Divider />
-      {/*<NoPaddingButton
+      <NoPaddingButton
         type={"link"}
-        onClick={() => props.setProjectModalOpen(true)}
+        onClick={() => dispatch(projectListAction.openProjectModal())}
       >
         Create Project
-      </NoPaddingButton>*/}
-      {props.projectButton}
+      </NoPaddingButton>
     </ContentContainer>
   );
   return (

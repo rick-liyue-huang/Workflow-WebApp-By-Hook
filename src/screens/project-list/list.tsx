@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject } from "hooks";
 import { NoPaddingButton } from "../../components/lib";
+import { useDispatch } from "react-redux";
+import { projectListAction } from "./project-list.slice";
 
 // personId changed to number type
 export interface Project {
@@ -31,7 +33,7 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
   // 科里化, 因为  id 是 先 发现的，然后是 pin 后来知道的，因此需要先处理前面的后处理后面。这就是科里化
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(props.reload);
-
+  const dispatch = useDispatch();
   return (
     <Table
       pagination={false}
@@ -92,13 +94,14 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
                 overlay={
                   <Menu>
                     <Menu.Item key={"edit"}>
-                      {/*<NoPaddingButton
+                      <NoPaddingButton
                         type={"link"}
-                        onClick={() => props.setProjectModalOpen(true)}
+                        onClick={() =>
+                          dispatch(projectListAction.openProjectModal())
+                        }
                       >
                         Edit
-                      </NoPaddingButton>*/}
-                      {props.projectButton}
+                      </NoPaddingButton>
                     </Menu.Item>
                   </Menu>
                 }

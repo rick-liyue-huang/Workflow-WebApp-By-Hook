@@ -12,24 +12,17 @@ import { ProjectScreen } from "screens/one-project";
 import { resetRouter } from "./utils";
 import { ProjectModal } from "./screens/project-list/project-modal";
 import { ProjectPopover } from "./components/project-popover";
+import { useDispatch } from "react-redux";
+import { projectListAction } from "./screens/project-list/project-list.slice";
 // import { User } from "./screens/project-list/search-panel";
 
 export const AuthenticatedApp = () => {
   //Lifting State Up to deal with opening one 'editProject' page
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  // const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const dispatch = useDispatch();
   return (
     <Container>
-      <PageHeader
-        /*  component composition can use to decompose the set method, */
-        projectButton={
-          <NoPaddingButton
-            type={"link"}
-            onClick={() => setProjectModalOpen(true)}
-          >
-            Create Project
-          </NoPaddingButton>
-        }
-      />
+      <PageHeader />
       {/*<Button onClick={() => setProjectModalOpen(true)}>test</Button>*/}
       <Main>
         <Router>
@@ -42,7 +35,9 @@ export const AuthenticatedApp = () => {
                   projectButton={
                     <NoPaddingButton
                       type={"link"}
-                      onClick={() => setProjectModalOpen(true)}
+                      onClick={() =>
+                        dispatch(projectListAction.openProjectModal())
+                      }
                     >
                       Create Project
                     </NoPaddingButton>
@@ -58,18 +53,12 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
+      <ProjectModal />
     </Container>
   );
 };
 
-const PageHeader = (props: {
-  // setProjectModalOpen: (isOpen: boolean) => void;
-  projectButton: JSX.Element;
-}) => {
+const PageHeader = () => {
   return (
     <Header>
       <HeaderLeft gap={true} between={true}>
@@ -78,7 +67,7 @@ const PageHeader = (props: {
         </NoPaddingButton>
         {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
         {/*<ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />*/}
-        <ProjectPopover {...props} />
+        <ProjectPopover />
         <span>Account</span>
       </HeaderLeft>
       <HeaderRight>

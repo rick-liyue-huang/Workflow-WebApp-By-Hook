@@ -7,7 +7,9 @@ import { Typography, Button } from "antd";
 import { useProjects, useUsers, useDocumentTitle } from "hooks";
 import { useUrlQueryParam } from "../../hooks/use-url-query-param";
 import { useProjectSearchParams } from "./utils";
-import { Row } from "components/lib";
+import { NoPaddingButton, Row } from "components/lib";
+import { useDispatch } from "react-redux";
+import { projectListAction } from "./project-list.slice";
 // import { Helmet } from "react-helmet";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
@@ -46,6 +48,7 @@ export const ProjectListScreen = (props: {
   });*/
 
   const { data: users } = useUsers();
+  const dispatch = useDispatch();
   useUrlQueryParam(["random"]);
   return (
     <Container>
@@ -54,10 +57,11 @@ export const ProjectListScreen = (props: {
       </Helmet>*/}
       <Row between={true}>
         <h1>Project List</h1>
-        {/*<Button onClick={() => props.setProjectModalOpen(true)}>
+        <NoPaddingButton
+          onClick={() => dispatch(projectListAction.openProjectModal())}
+        >
           Create Project
-        </Button>*/}
-        {props.projectButton}
+        </NoPaddingButton>
       </Row>
 
       <SearchPanel param={param} setParam={setParam} users={users || []} />
