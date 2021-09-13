@@ -15,7 +15,7 @@ export const ProjectPopover = (props: {
       <Typography.Text type={"secondary"}>Collected Project</Typography.Text>
       <List>
         {pinnedProjects?.map((project) => (
-          <List.Item>
+          <List.Item key={project.id}>
             <List.Item.Meta title={project.name} />
           </List.Item>
         ))}
