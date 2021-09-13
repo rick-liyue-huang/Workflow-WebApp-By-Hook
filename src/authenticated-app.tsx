@@ -6,7 +6,7 @@ import { Button, Dropdown, Menu } from "antd";
 import { NoPaddingButton, Row } from "./components/lib";
 // import {ReactComponent as SoftLogo} from 'assets/software-logo.svg';
 import logo from "assets/workflow.svg";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/one-project";
 import { resetRouter } from "./utils";
@@ -54,7 +54,7 @@ export const AuthenticatedApp = () => {
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
-            <Navigate to={"/projects"} replace={true} />
+            <Navigate to={"/projects"} />
           </Routes>
         </Router>
       </Main>

@@ -13,7 +13,7 @@ export const ProjectScreen = () => {
       <Routes>
         <Route path={"/dashboard"} element={<DashboardScreen />} />
         <Route path={"/group"} element={<GroupScreen />} />
-        <Navigate to={window.location.pathname + "/dashboard"} />
+        <Navigate to={window.location.pathname + "/dashboard"} replace={true} />
       </Routes>
     </div>
   );
