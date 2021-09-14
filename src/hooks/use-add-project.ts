@@ -1,21 +1,20 @@
 import { useAsync } from "./use-async";
 import { useHttp } from "./use-http";
 import { Project } from "screens/project-list/list";
+import { useMutation, useQueryClient } from "react-query";
 
 export const useAddProject = () => {
-  const { execute, ...asyncRes } = useAsync();
   const client = useHttp();
-  const mutate = (param: Partial<Project>) => {
-    return execute(
-      client(`projects/${param.id}`, {
+
+  const queryClient = useQueryClient();
+  return useMutation(
+    (param: Partial<Project>) =>
+      client(`projects`, {
         data: param,
         method: "POST",
-      })
-    );
-  };
-
-  return {
-    mutate,
-    ...asyncRes,
-  };
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries("projects"),
+    }
+  );
 };

@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { Divider, Button } from "antd";
 // import { Helmet } from "react-helmet";
 import { useDocumentTitle } from "hooks";
+import { ErrorBox } from "../components/lib";
 // import logo from "assets/workflow.svg";
 // import left from "assets/left.svg";
 // import right from "assets/right.svg";
@@ -30,9 +31,10 @@ export const UnauthenticatedApp = () => {
       }}>exception</Button>*/}
       <NewCard>
         <NewTitle>{isRegister ? "Please Register" : "Please Login"}</NewTitle>
-        {error ? (
+        <ErrorBox error={error} />
+        {/*{error ? (
           <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-        ) : null}
+        ) : null}*/}
         {isRegister ? (
           <RegisterScreen onError={setError} />
         ) : (

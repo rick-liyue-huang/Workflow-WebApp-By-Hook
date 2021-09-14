@@ -4,7 +4,7 @@ import { PreList } from "./pre-list";
 import { useDebounce } from "hooks";
 import styled from "@emotion/styled";
 import { Typography, Button } from "antd";
-import { useProjects, useUsers, useDocumentTitle } from "hooks";
+import { usePreUseProjects, useUsers, useDocumentTitle } from "hooks";
 import { useUrlQueryParam } from "../../hooks/use-url-query-param";
 import { useProjectSearchParams } from "./utils";
 import { Row } from "components/lib";
@@ -40,7 +40,12 @@ export const PreProjectListScreen = (props: {
     // eslint-disable-next-line
   }, [debouncedParam]);*/
 
-  const { isLoading, error, data: list, reload } = useProjects(debouncedParam);
+  const {
+    isLoading,
+    error,
+    data: list,
+    reload,
+  } = usePreUseProjects(debouncedParam);
   /*useMount(() => {
     clients("users").then(setUsers);
   });*/

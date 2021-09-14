@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject, useProjectModal } from "hooks";
 import { NoPaddingButton } from "../../components/lib";
+import { useProject } from "../../hooks/use-project";
 
 // personId changed to number type
 export interface Project {
@@ -20,7 +21,7 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   // list: Project[];
   users: User[];
-  reload?: () => void;
+  // reload?: () => void;
   // setProjectModalOpen: (isOpen: boolean) => void;
   // projectButton: JSX.Element;
 }
@@ -28,11 +29,15 @@ interface ListProps extends TableProps<Project> {
 export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
   // hooks must use on top level, so I encap it on another hooks
   const { mutate } = useEditProject();
+  // use project-modal
+  const { startEdit } = useProjectModal();
+
   // 科里化, 因为  id 是 先 发现的，然后是 pin 后来知道的，因此需要先处理前面的后处理后面。这就是科里化
   const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props.reload);
+    mutate({ id, pin }); /*.then(props.reload)*/
+  const editProject = (id: number) => () => startEdit(id);
 
-  const { open } = useProjectModal();
+  // const { open } = useProjectModal();
 
   return (
     <Table
@@ -42,7 +47,6 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
         {
           title: <Pin checked={true} disabled={true} />,
           render(value, project) {
-            // TODO
             return (
               <Pin
                 checked={project.pin}
@@ -93,11 +97,10 @@ export const List: React.FC<ListProps> = ({ users, /*list*/ ...props }) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>
-                      <NoPaddingButton onClick={open} type={"link"}>
-                        Edit Project
-                      </NoPaddingButton>
+                    <Menu.Item onClick={editProject(project.id)} key={"edit"}>
+                      Edit
                     </Menu.Item>
+                    <Menu.Item key={"delete"}>Delete</Menu.Item>
                   </Menu>
                 }
               >

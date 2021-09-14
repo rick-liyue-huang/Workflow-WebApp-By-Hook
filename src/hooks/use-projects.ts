@@ -3,21 +3,15 @@ import { Project } from "screens/project-list/list";
 import { useCallback, useEffect } from "react";
 import { cleanObject } from "utils";
 import { useHttp } from "./use-http";
+import { useQuery } from "react-query";
+
+// will use react-query and rename the previous file
+// get the projects list
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
-  const { execute, ...result } = useAsync<Project[]>();
 
-  const fetchProject = useCallback(
-    () => client("projects", { data: cleanObject(param || {}) }),
-    [client, param]
+  return useQuery<Project[]>(["projects", param], () =>
+    client("projects", { data: param })
   );
-
-  useEffect(() => {
-    execute(fetchProject(), {
-      reload: fetchProject,
-    });
-  }, [param, execute, fetchProject]);
-
-  return result;
 };

@@ -7,7 +7,7 @@ import { Typography, Button } from "antd";
 import { useProjects, useUsers, useDocumentTitle } from "hooks";
 import { useUrlQueryParam } from "../../hooks/use-url-query-param";
 import { useProjectSearchParams } from "./utils";
-import { NoPaddingButton, Row } from "components/lib";
+import { ErrorBox, NoPaddingButton, Row } from "components/lib";
 // import { Helmet } from "react-helmet";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
@@ -37,7 +37,11 @@ export const ProjectListScreen = () => {
     // eslint-disable-next-line
   }, [debouncedParam]);*/
 
-  const { isLoading, error, data: list, reload } = useProjects(debouncedParam);
+  const {
+    isLoading,
+    error,
+    data: list /*, reload*/,
+  } = useProjects(debouncedParam);
   /*useMount(() => {
     clients("users").then(setUsers);
   });*/
@@ -60,12 +64,13 @@ export const ProjectListScreen = () => {
       </Row>
 
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      {error ? (
+      <ErrorBox error={error} />
+      {/*{error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-      ) : null}
+      ) : null}*/}
       {/*<List list={list} users={users} />*/}
       <List
-        reload={reload}
+        // reload={reload}
         loading={isLoading}
         dataSource={list || []}
         users={users || []}

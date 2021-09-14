@@ -8,6 +8,10 @@ import { useDocumentTitle } from "./use-documentTitle";
 import { useEditProject } from "./use-edit-project";
 import { useAddProject } from "./use-add-project";
 import { useProjectModal } from "./use-project-modal";
+import { usePreUseProjects } from "./pre-use-projects";
+import { usePreuseEditProject } from "./pre-use-edit-project";
+import { usePreUseAddProject } from "./pre-use-add-project";
+import { useSetUrlSearchParam } from "./use-set-url-search-param";
 
 export {
   useArray,
@@ -20,4 +24,8 @@ export {
   useEditProject,
   useAddProject,
   useProjectModal,
+  usePreUseProjects,
+  usePreuseEditProject,
+  usePreUseAddProject,
+  useSetUrlSearchParam,
 };

@@ -3,18 +3,21 @@ import { useHttp } from "./use-http";
 import { Project } from "../screens/project-list/list";
 import { useMutation, useQueryClient } from "react-query";
 
-export const useEditProject = () => {
+export const usePreuseEditProject = () => {
   const client = useHttp();
+  const { execute, ...asyncRes } = useAsync();
 
-  const queryClient = useQueryClient();
-  return useMutation(
-    (param: Partial<Project>) =>
+  const mutate = (param: Partial<Project>) => {
+    return execute(
       client(`projects/${param.id}`, {
         data: param,
         method: "PATCH",
-      }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-    }
-  );
+      })
+    );
+  };
+
+  return {
+    mutate,
+    ...asyncRes,
+  };
 };

@@ -9,8 +9,8 @@ interface IdSelectProps
     SelectProps,
     "value" | "onChange" | "defaultOptionName" | "options"
   > {
-  value: common | undefined | null;
-  onChange: (value?: number) => void;
+  value?: common | undefined | null;
+  onChange?: (value?: number) => void;
   defaultOptionName?: string;
   options?: { name: string; id: number }[];
 }
@@ -29,7 +29,7 @@ export const IdSelect: React.FC<IdSelectProps> = (props) => {
   return (
     <Select
       value={options?.length ? toNumber(value) : 0}
-      onChange={(value) => onChange(toNumber(value) || undefined)}
+      onChange={(value) => onChange?.(toNumber(value) || undefined)}
       {...restProps}
     >
       {defaultOptionName ? (
