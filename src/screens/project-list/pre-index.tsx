@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { SearchPanel } from "./search-panel";
-import { List } from "./list";
-import { useDebounce, useProjectModal } from "hooks";
+import { PreList } from "./pre-list";
+import { useDebounce } from "hooks";
 import styled from "@emotion/styled";
 import { Typography, Button } from "antd";
 import { useProjects, useUsers, useDocumentTitle } from "hooks";
 import { useUrlQueryParam } from "../../hooks/use-url-query-param";
 import { useProjectSearchParams } from "./utils";
-import { NoPaddingButton, Row } from "components/lib";
+import { Row } from "components/lib";
 // import { Helmet } from "react-helmet";
 
 export const ApiUrl = process.env.REACT_APP_API_URL;
 
-export const ProjectListScreen = () => {
+export const PreProjectListScreen = (props: {
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
+}) => {
   /* const [, setParam] = useState({
     name: "",
     personId: "",
@@ -43,10 +46,7 @@ export const ProjectListScreen = () => {
   });*/
 
   const { data: users } = useUsers();
-  // useUrlQueryParam(["random"]);
-
-  const { open } = useProjectModal();
-
+  useUrlQueryParam(["random"]);
   return (
     <Container>
       {/*<Helmet>
@@ -54,9 +54,10 @@ export const ProjectListScreen = () => {
       </Helmet>*/}
       <Row between={true}>
         <h1>Project List</h1>
-        <NoPaddingButton onClick={open} type={"link"}>
+        {/*<Button onClick={() => props.setProjectModalOpen(true)}>
           Create Project
-        </NoPaddingButton>
+        </Button>*/}
+        {props.projectButton}
       </Row>
 
       <SearchPanel param={param} setParam={setParam} users={users || []} />
@@ -64,19 +65,19 @@ export const ProjectListScreen = () => {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       {/*<List list={list} users={users} />*/}
-      <List
+      <PreList
         reload={reload}
         loading={isLoading}
         dataSource={list || []}
         users={users || []}
         // setProjectModalOpen={props.setProjectModalOpen}
-        // projectButton={props.projectButton}
+        projectButton={props.projectButton}
       />
     </Container>
   );
 };
 
-ProjectListScreen.whyDidYouRender = true;
+PreProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;

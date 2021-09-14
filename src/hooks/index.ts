@@ -7,6 +7,7 @@ import { useUsers } from "./use-users";
 import { useDocumentTitle } from "./use-documentTitle";
 import { useEditProject } from "./use-edit-project";
 import { useAddProject } from "./use-add-project";
+import { useProjectModal } from "./use-project-modal";
 
 export {
   useArray,
@@ -18,4 +19,5 @@ export {
   useDocumentTitle,
   useEditProject,
   useAddProject,
+  useProjectModal,
 };

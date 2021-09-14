@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProjectListScreen } from "./screens/project-list";
+import { PreProjectListScreen } from "./screens/project-list/pre-index";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
@@ -10,46 +10,66 @@ import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/one-project";
 import { resetRouter } from "./utils";
-import { ProjectModal } from "./screens/project-list/project-modal";
-import { ProjectPopover } from "./components/project-popover";
+import { PreProjectModal } from "./screens/project-list/pre-project-modal";
+import { PreProjectPopover } from "./components/pre-project-popover";
 // import { User } from "./screens/project-list/search-panel";
 
-export const AuthenticatedApp = () => {
+export const PreAuthenticatedApp = () => {
   //Lifting State Up to deal with opening one 'editProject' page
-  // will use 'use-project-modal', so change to from 'pre-xxx-xx'
-  // const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <Router>
-        <PageHeader
+      <PageHeader
         /*  component composition can use to decompose the set method, */
-        /*projectButton={
-            <NoPaddingButton
-              type={"link"}
-              onClick={() => setProjectModalOpen(true)}
-            >
-              Create Project
-            </NoPaddingButton>
-          }*/
-        />
-        {/*<Button onClick={() => setProjectModalOpen(true)}>test</Button>*/}
-        <Main>
+        projectButton={
+          <NoPaddingButton
+            type={"link"}
+            onClick={() => setProjectModalOpen(true)}
+          >
+            Create Project
+          </NoPaddingButton>
+        }
+      />
+      {/*<Button onClick={() => setProjectModalOpen(true)}>test</Button>*/}
+      <Main>
+        <Router>
           <Routes>
-            <Route path={"/projects"} element={<ProjectListScreen />} />
+            <Route
+              path={"/projects"}
+              element={
+                <PreProjectListScreen
+                  // setProjectModalOpen={setProjectModalOpen}
+                  projectButton={
+                    <NoPaddingButton
+                      type={"link"}
+                      onClick={() => setProjectModalOpen(true)}
+                    >
+                      Create Project
+                    </NoPaddingButton>
+                  }
+                />
+              }
+            />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
             <Navigate to={"/projects"} />
           </Routes>
-        </Main>
-        <ProjectModal />
-      </Router>
+        </Router>
+      </Main>
+      <PreProjectModal
+        projectModalOpen={projectModalOpen}
+        onClose={() => setProjectModalOpen(false)}
+      />
     </Container>
   );
 };
 
-const PageHeader = () => {
+const PageHeader = (props: {
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
+}) => {
   return (
     <Header>
       <HeaderLeft gap={true} between={true}>
@@ -58,7 +78,7 @@ const PageHeader = () => {
         </NoPaddingButton>
         {/*<SoftLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
         {/*<ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />*/}
-        <ProjectPopover />
+        <PreProjectPopover {...props} />
         <span>Account</span>
       </HeaderLeft>
       <HeaderRight>
