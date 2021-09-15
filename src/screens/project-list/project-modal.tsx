@@ -4,12 +4,17 @@ import { useAddProject, useEditProject, useProjectModal } from "hooks";
 import { UserSelect } from "../../components/user-select";
 import { useForm } from "antd/es/form/Form";
 import { ErrorBox } from "../../components/lib";
+import { useProjectQueryKey } from "../../hooks/use-optimistic-options";
 
 export const ProjectModal = () => {
   const { projectModalOpen, close, editingProject, isLoading } =
     useProjectModal();
   const useMutateProject = editingProject ? useEditProject : useAddProject;
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+  const {
+    mutateAsync,
+    error,
+    isLoading: mutateLoading,
+  } = useMutateProject(useProjectQueryKey());
 
   // refresh the form
   const [form] = useForm();

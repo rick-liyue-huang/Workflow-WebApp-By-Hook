@@ -2,21 +2,20 @@ import { useAsync } from "./use-async";
 import { useHttp } from "./use-http";
 import { Project } from "screens/project-list/list";
 import { QueryKey, useMutation, useQueryClient } from "react-query";
-import { useAddConfig } from "./use-optimistic-options";
+import { useDeleteConfig } from "./use-optimistic-options";
 
-export const useAddProject = (queryKey: QueryKey) => {
+export const useDeleteProject = (queryKey: QueryKey) => {
   const client = useHttp();
 
   // const queryClient = useQueryClient();
   return useMutation(
-    (param: Partial<Project>) =>
-      client(`projects`, {
-        data: param,
-        method: "POST",
+    ({ id }: { id: number }) =>
+      client(`projects/${id}`, {
+        method: "DELETE",
       }),
     /*{
       onSuccess: () => queryClient.invalidateQueries("projects"),
     }*/
-    useAddConfig(queryKey)
+    useDeleteConfig(queryKey)
   );
 };
